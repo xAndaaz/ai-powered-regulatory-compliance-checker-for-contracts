@@ -1,0 +1,7 @@
+langchain
+pandas
+numpy
+scikit-learn
+fastapi[all]
+pydantic
+python-dotenv
