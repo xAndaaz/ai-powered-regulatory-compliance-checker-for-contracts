@@ -1,10 +1,12 @@
 from fastapi import FastAPI
-from src.controller import pdf_controller
+from src.controller import pdf_controller, extraction_controller, embedding_controller
 
 app = FastAPI()
 
-# Include the router
+# Include routers
 app.include_router(pdf_controller.router, prefix="/api/v1")
+app.include_router(extraction_controller.router, prefix="/api/v1")
+app.include_router(embedding_controller.router, prefix="/api/v1")
 
 if __name__ == "__main__":
     import uvicorn
