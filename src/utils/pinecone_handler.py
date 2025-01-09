@@ -1,7 +1,26 @@
 import os
+import pinecone  # Import the Pinecone library
+from src.config.settings import settings
+
 from pinecone import Pinecone, ServerlessSpec
 
 class PineconeHandler:
+    
+    """def __init__(self):
+        # Initialize Pinecone
+        pinecone.init(api_key=settings.PINECONE_API_KEY, environment=settings.PINECONE_ENVIRONMENT)
+        self.index_name = settings.PINECONE_INDEX_NAME.lower()  # Convert to lowercase
+
+        # Validate index name
+        if not self.index_name.replace("-", "").isalnum():
+            raise ValueError(f"Invalid Pinecone index name: {self.index_name}")
+
+        # Create or connect to the index
+        if self.index_name not in pinecone.list_indexes():
+            pinecone.create_index(self.index_name, dimension=384)  # Adjust dimension for embedding model
+        self.index = pinecone.Index(self.index_name)
+
+    """ 
     def __init__(self):
         # Create a Pinecone instance
         self.pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
@@ -17,7 +36,7 @@ class PineconeHandler:
             )
 
         # Access the index
-        self.index = self.pc.Index(self.index_name)
+        self.index = self.pc.Index(self.index_name) 
 
     def upsert_embeddings(self, embeddings, metadata):
         # Prepare data for upsertion
