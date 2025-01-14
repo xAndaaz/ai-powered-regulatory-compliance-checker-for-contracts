@@ -47,5 +47,16 @@ class PineconeHandler:
         self.index.upsert(vectors=data)
 
     def query_embeddings(self, vector, top_k=5):
-        # Query the Pinecone index
-        return self.index.query(vector=vector, top_k=top_k, include_metadata=True)
+        # Perform the query
+        response = self.index.query(vector=vector, top_k=top_k, include_metadata=True)
+
+        # Ensure the response is JSON serializable
+        return {
+            "matches": [
+                {
+                    "id": match.id,
+                    "score": match.score,
+                    "metadata": match.metadata
+                } for match in response.get("matches", [])
+            ]
+        }
